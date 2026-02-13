@@ -10,14 +10,14 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family: 'Segoe UI', sans-serif;
+font-family:'Segoe UI',sans-serif;
 }
 
 body{
 background:black;
 color:white;
-overflow-x:hidden;
-scroll-behavior:smooth;
+overflow:hidden;
+text-align:center;
 }
 
 /* YILDIZ */
@@ -28,13 +28,13 @@ left:0;
 z-index:-1;
 }
 
+/* BÖLÜM */
 section{
 height:100vh;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-text-align:center;
 padding:20px;
 }
 
@@ -58,8 +58,22 @@ button:hover{
 transform:scale(1.1);
 }
 
-#game{
-display:none;
+/* NEON */
+.neon{
+font-size:3em;
+color:#ff4da6;
+text-shadow:
+0 0 5px #ff4da6,
+0 0 10px #ff4da6,
+0 0 20px #ff1a75,
+0 0 40px #ff1a75,
+0 0 80px #ff0066;
+animation:pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse{
+from{transform:scale(1);}
+to{transform:scale(1.1);}
 }
 
 .heart{
@@ -68,100 +82,83 @@ position:absolute;
 cursor:pointer;
 }
 
-#final{
+#game,#counterSection,#final{
 display:none;
-font-size:2em;
-animation:fadeIn 3s ease forwards;
 }
 
-@keyframes fadeIn{
-from{opacity:0;}
-to{opacity:1;}
-}
 </style>
 </head>
 <body>
 
 <canvas id="stars"></canvas>
 
-<!-- MÜZİK -->
-<iframe id="musicPlayer"
-width="0" height="0"
-src=""
-frameborder="0"
-allow="autoplay">
-</iframe>
+<audio id="bgMusic" src="music.mp3" loop></audio>
 
-<!-- INTRO -->
 <section id="intro">
 <h1>Bu site sadece bir kişi için hazırlandı...</h1>
 <button onclick="startLove()">Ben Nehir’im 💖</button>
 </section>
 
-<!-- EVREN -->
-<section id="universe" style="display:none;">
+<section id="universe">
 <h1>CEVDET ❤️ NEHİR</h1>
 <p>Bu evrende milyarlarca yıldız var... Ama benim yıldızım sensin.</p>
 <br>
 <button onclick="startGame()">Aşk Yolculuğuna Başla ✨</button>
 </section>
 
-<!-- OYUN -->
 <section id="game">
 <h1>Kalpleri Yakala 💗</h1>
 <p>3 kalbi yakala ve sürprizi gör...</p>
 <div id="score">0</div>
 </section>
 
-<!-- SAYAÇ -->
-<section id="counterSection" style="display:none;">
+<section id="counterSection">
 <h1>9 Ocak'tan beri 💖</h1>
 <h2 id="counter"></h2>
 </section>
 
-<!-- FİNAL -->
 <section id="final">
-<p>Bu sadece bir site değil...</p>
-<p>Benim sana verdiğim bir söz.</p>
+<p>Bu sadece bir hediye değil...</p>
+<p>Benim sana verdiğim söz.</p>
 <br>
-<h1>pat pat ❤️</h1>
+<h1 class="neon">tontişkom ❤️</h1>
 </section>
 
 <script>
 
-/* YILDIZ ARKA PLAN */
-const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+/* YILDIZ */
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-let stars = [];
+let stars=[];
 for(let i=0;i<200;i++){
 stars.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-radius:Math.random()*2
+r:Math.random()*2
 });
 }
 
-function drawStars(){
+function draw(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
 ctx.fillStyle="white";
 stars.forEach(s=>{
 ctx.beginPath();
-ctx.arc(s.x,s.y,s.radius,0,Math.PI*2);
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
 ctx.fill();
 });
-requestAnimationFrame(drawStars);
+requestAnimationFrame(draw);
 }
-drawStars();
+draw();
 
 /* BAŞLANGIÇ */
 function startLove(){
 
-// MÜZİĞİ BUTONLA BAŞLAT (mobil fix)
-let player = document.getElementById("musicPlayer");
-player.src="https://www.youtube.com/embed/qJNSoCCk8GU?autoplay=1&loop=1&playlist=qJNSoCCk8GU";
+// MÜZİK BAŞLAT (mobil uyumlu)
+let music=document.getElementById("bgMusic");
+music.play();
 
 document.getElementById("intro").style.display="none";
 document.getElementById("universe").style.display="flex";
@@ -203,7 +200,7 @@ document.getElementById("counterSection").style.display="flex";
 startCounter();
 }
 
-/* GÜN SAYACI */
+/* SAYAÇ */
 function startCounter(){
 let startDate=new Date("2026-01-09");
 let today=new Date();
@@ -220,4 +217,3 @@ document.getElementById("final").style.display="flex";
 
 </body>
 </html>
-
