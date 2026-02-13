@@ -20,7 +20,7 @@ overflow-x:hidden;
 scroll-behavior:smooth;
 }
 
-/* YILDIZ ARKA PLAN */
+/* YILDIZ */
 canvas{
 position:fixed;
 top:0;
@@ -28,7 +28,6 @@ left:0;
 z-index:-1;
 }
 
-/* BÖLÜMLER */
 section{
 height:100vh;
 display:flex;
@@ -59,7 +58,6 @@ button:hover{
 transform:scale(1.1);
 }
 
-/* OYUN */
 #game{
 display:none;
 }
@@ -70,44 +68,40 @@ position:absolute;
 cursor:pointer;
 }
 
-.fade{
-animation:fadeIn 2s ease forwards;
-opacity:0;
-}
-
-@keyframes fadeIn{
-to{opacity:1;}
-}
-
-/* FİNAL */
 #final{
 display:none;
 font-size:2em;
 animation:fadeIn 3s ease forwards;
 }
 
+@keyframes fadeIn{
+from{opacity:0;}
+to{opacity:1;}
+}
 </style>
 </head>
 <body>
 
 <canvas id="stars"></canvas>
 
-<!-- YOUTUBE ŞARKI -->
-<iframe width="0" height="0" 
-src="https://www.youtube.com/embed/qJNSoCCk8GU?autoplay=1&loop=1&playlist=qJNSoCCk8GU"
-frameborder="0" allow="autoplay">
+<!-- MÜZİK -->
+<iframe id="musicPlayer"
+width="0" height="0"
+src=""
+frameborder="0"
+allow="autoplay">
 </iframe>
 
-<!-- GİRİŞ -->
+<!-- INTRO -->
 <section id="intro">
-<h1 class="fade">Bu site sadece bir kişi için hazırlandı...</h1>
+<h1>Bu site sadece bir kişi için hazırlandı...</h1>
 <button onclick="startLove()">Ben Nehir’im 💖</button>
 </section>
 
 <!-- EVREN -->
 <section id="universe" style="display:none;">
-<h1 class="fade">CEVDET ❤️ NEHİR</h1>
-<p class="fade">Bu evrende milyarlarca yıldız var... Ama benim yıldızım sensin.</p>
+<h1>CEVDET ❤️ NEHİR</h1>
+<p>Bu evrende milyarlarca yıldız var... Ama benim yıldızım sensin.</p>
 <br>
 <button onclick="startGame()">Aşk Yolculuğuna Başla ✨</button>
 </section>
@@ -135,7 +129,7 @@ frameborder="0" allow="autoplay">
 
 <script>
 
-/* YILDIZ ANİMASYONU */
+/* YILDIZ ARKA PLAN */
 const canvas = document.getElementById("stars");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
@@ -162,8 +156,13 @@ requestAnimationFrame(drawStars);
 }
 drawStars();
 
-/* BÖLÜM GEÇİŞ */
+/* BAŞLANGIÇ */
 function startLove(){
+
+// MÜZİĞİ BUTONLA BAŞLAT (mobil fix)
+let player = document.getElementById("musicPlayer");
+player.src="https://www.youtube.com/embed/qJNSoCCk8GU?autoplay=1&loop=1&playlist=qJNSoCCk8GU";
+
 document.getElementById("intro").style.display="none";
 document.getElementById("universe").style.display="flex";
 }
@@ -210,6 +209,7 @@ let startDate=new Date("2026-01-09");
 let today=new Date();
 let diff=Math.floor((today-startDate)/(1000*60*60*24));
 document.getElementById("counter").innerText=diff+" gündür kalbimi çalıyorsun 💖";
+
 setTimeout(()=>{
 document.getElementById("counterSection").style.display="none";
 document.getElementById("final").style.display="flex";
@@ -220,3 +220,4 @@ document.getElementById("final").style.display="flex";
 
 </body>
 </html>
+
